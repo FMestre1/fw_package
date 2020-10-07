@@ -23,7 +23,7 @@ library(rmangal)
 library(randomcoloR)
 library(ggplot2)
 
-# 2. Create food web list
+# 2. Create food web list (from the mangal database as an example)
 mg1 <- create.fw.list(db="mg", ref=TRUE, spatial = TRUE)
 
 # 3. Which are  adjacency matrices (0 and 1 matrices)?
