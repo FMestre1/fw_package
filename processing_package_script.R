@@ -1,3 +1,5 @@
+#Function to list all functions inside another function ( from the fBasics package)
+
 listFunctions <- function(function.name, recursive = FALSE,
                           checked.functions = NULL){
 
@@ -54,8 +56,6 @@ listFunctions(function.name="remove.repeated.names"),
 listFunctions(function.name="remove.non.numeric")
 )
 )
-
-#Well... I guess no particluar package in use...
 
 
 
