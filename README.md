@@ -6,7 +6,7 @@ DISCLAIMER: This is a very early release. The code will be subject to improvemen
 
 In the blog Geekcologist I provided an example of the use of some of these functions: https://geekcologist.wordpress.com/2020/02/06/function-to-download-biotic-interaction-datasets/
 
-# 1. Load required packages
+# 1. Load required packages  
 library(RCurl)  
 library(XML)  
 library(plyr)  
