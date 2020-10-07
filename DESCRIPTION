@@ -1,0 +1,13 @@
+Package: fw
+Type: Package
+Title: FWebs
+Version: 0.1.0
+Author: Frederico Mestre
+Maintainer: Frederico Mestre <mestre.frederico@gmail.com>
+Description: The package allows downloading food web matrices
+    from several online databases. It also provides the tools 
+    to process these matrices and derive basic structural metrics 
+    and degree distribution.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
