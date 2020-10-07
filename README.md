@@ -1,8 +1,3 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
 # FWebs (v. 0.1.0)
 
 Beta version of package to download, process and derive metrics from food web datasets. 
@@ -67,6 +62,4 @@ metrics
 ```{r}
 dd.fw(mg1, log=TRUE, cumulative=TRUE)
 ```
-
-![plt](plt.png)
 
