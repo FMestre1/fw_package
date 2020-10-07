@@ -2,15 +2,12 @@
 
 Beta version of package to download, process and derive metrics from food web datasets. 
 
-#DISCLAIMER 
-This is a very early release. The code will be subject to improvements. A few errors might occur when running these functions. Any suggestions are welcomed!
-
-#EXAMPLE (07 OCT. 2020)
+DISCLAIMER: This is a very early release. The code will be subject to improvements. A few errors might occur when running these functions. Any suggestions are welcomed!
 
 In the blog Geekcologist I provided an example of the use of some of these functions: https://geekcologist.wordpress.com/2020/02/06/function-to-download-biotic-interaction-datasets/
 
 # 1. Load required packages
-library(RCurl)\n
+library(RCurl)
 library(XML)
 library(plyr)
 library(stringr)
