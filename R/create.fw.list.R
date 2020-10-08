@@ -1,13 +1,46 @@
+#' Download dataset from database
+#'
+#' @param db Database: eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
+#' @param folder Folder in the working directory to get the dataset files (db=gw and wl)
+#' @param type If db=mg the user should provide the type of interactions to be downloaded
+#' @param ecosyst Getting ecosystem information (only for db=gw, db=eb)
+#' @param ref references information
+#' @param spatial get spatial info (only for db=wl, db=eb and db=mg)
+#' @param code To get the food web code
+#' @return A list of matrices
+#' @importFrom Hmisc all.is.numeric
+#' @importFrom ggplot2 aes ggplot theme annotation_logticks geom_line scale_y_log10 scale_x_log10 element_text labs
+#' @importFrom NetIndices GenInd TrophInd
+#' @importFrom igraph degree degree_distribution graph_from_adjacency_matrix as_data_frame
+#' @importFrom sf st_as_sf st_cast st_geometry st_read st_zm
+#' @importFrom sp SpatialPolygons Polygon Polygons
+#' @importFrom XML xmlToList xmlTreeParse xpathSApply
+#' @importFrom stringr str_extract_all str_length str_sub word str_replace_all
+#' @importFrom methods as
+#' @importFrom stats na.omit
+#' @importFrom utils read.csv tail
+#' @importFrom randomcoloR randomColor
+#' @importFrom rmangal get_collection search_interactions as.igraph
+#' @importFrom plyr ldply
+#' @importFrom RCurl basicTextGatherer curlPerform
+#' @importFrom magrittr %>%
+#' @export
+#' @examples #mg2 <- create.fw.list(db="mg", ref=TRUE, spatial=TRUE)
+
+
 create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE)
   {
 
+  #utils::globalVariables(c("model.dissemination_allow", "model.whole_food_web"))
+  model.dissemination_allow <- model.whole_food_web <- NULL
+
   #### Arguments  ####
-  #'db' - database - eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
-  #'folder' - folder in the WD to get the dataset files (db=gw and wl).
-  #'type' - if db=mg the user should provide the type of interactions to be downloaded
-  # 'ecosyst' - Getting ecosystem information, only for gw, eb
-  #'ref' references information
-  #'spatial' - get spatial info, only for wl, eb and mg
+  #db - database - eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
+  #folder - folder in the WD to get the dataset files (db=gw and wl).
+  #type - if db=mg the user should provide the type of interactions to be downloaded
+  #ecosyst - Getting ecosystem information, only for gw, eb
+  #ref references information
+  #spatial - get spatial info, only for wl, eb and mg
 
   #### Data Sources ####
   #Global Web: https://www.globalwebdb.com/
@@ -509,11 +542,11 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
 
       message(paste0("\n\nFetching information from interactions of the type ","'",type[i], "'!"))
 
-      fwlist1 <- search_interactions(type = type[i]) %>% get_collection()
+      fwlist1 <- rmangal::search_interactions(type = type[i]) %>% rmangal::get_collection()
 
       net_info <- rbind(net_info, fwlist1)
 
-      fwlist2 <- as.igraph(fwlist1)
+      fwlist2 <- rmangal::as.igraph(fwlist1)
 
       fwlist <- c(fwlist, fwlist2)
 

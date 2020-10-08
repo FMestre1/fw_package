@@ -4,10 +4,13 @@ Title: FWebs
 Version: 0.1.0
 Author: Frederico Mestre
 Maintainer: Frederico Mestre <mestre.frederico@gmail.com>
-Description: The package allows downloading food web matrices
+Description: This package allows downloading food web matrices
     from several online databases. It also provides the tools 
     to process these matrices and derive basic structural metrics 
     and degree distribution.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.0
+Imports: methods, Hmisc, stringr, NetIndices, RCurl, XML, ggplot2, igraph, plyr, randomcoloR, rmangal, sf, sp, magrittr
+Depends: R (>= 3.5.0)

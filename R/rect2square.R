@@ -1,46 +1,55 @@
-########## Function to convert rectanguar matrices to square matrices ########## 
+#' Convert rectanguar matrices to square matrices (same number of columns and rows)
+#'
+#' @param list1 List with the interaction matrices
+#' @param is.gw Was the dataset downloaded from Globalweb? (TRUE/FALSE)
+#' @return A list of square matrices.
+#' @export
+#' @examples
+#' data(mg1)
+#' mg3 <- rect2square(mg1)
+
 rect2square <- function(list1, is.gw=FALSE){
-  
+
   list3 <- list1#save list1 structure
-  
+
   #list_names <- names(list1[[1]])
-  
+
   #if(any((names(list1))=="int_matrix"))
   if(any((names(list3))=="spatial_info")) list_S <- list3$spatial_info
   if(any((names(list3))=="ecosystem")) list_E <- list3$ecosystem
   if(any((names(list3))=="references")) list_R <- list3$references
-  
+
   #Check the list1 structure
   if(class(list1[[1]])=="list") {
     #nameslist <- names(list1)
     list1 <- list1[[1]]
     list_names <- names(list1)
   }
-  
+
   if(class(list1[[1]])!="list") list_names <- names(list1)
 
   list2 <- list()
 
   suppressWarnings(
-    { 
-    
+    {
+
     for(i in 1:length(list1)){
-      
+
       m1 <- list1[[i]]
-      
+
       rnames <- rownames(m1)
       cnames <- colnames(m1)
       all_names <- c(rnames,cnames)
-      
+
       if (ncol(m1)==nrow(m1) && setequal(rnames,cnames)) {
         message(paste0("Matrix ",i, " already is square!"))
         m2 <- m1
         list2[[i]] <- as.data.frame(m2)
         }#end of 'if'
-      
+
       if (ncol(m1)!=nrow(m1) | !setequal(rnames,cnames)){
         message(paste0("Matrix ", i, " needs to be 'squared'!"))
-        col_names0 <- colnames(m1)    
+        col_names0 <- colnames(m1)
         row_names0 <- rownames(m1)
         #col_names0 <- gsub("[.](?!\\d+$)", " ", col_names0, perl=TRUE)#remove dots
         #row_names0 <- gsub("[.](?!\\d+$)", " ", row_names0, perl=TRUE)#remove dots
@@ -55,7 +64,7 @@ rect2square <- function(list1, is.gw=FALSE){
         m2 <- as.data.frame(matrix(ncol=size_M, nrow=size_M))
         colnames(m2) <- all_names
         rownames(m2) <- all_names
-        
+
         for(a in 1:size_M){
           for(b in 1:size_M){
             row1 <- all_names[a]
@@ -68,20 +77,20 @@ rect2square <- function(list1, is.gw=FALSE){
             m2[a,b] <- el1
           }
         }
-        
+
       list2[[i]] <- as.data.frame(m2)
         #return(list2)
-        
+
       }#end of 'if'
-      
+
       #list2[[i]] <- as.data.frame(m2)
-      
+
     }#end for loop
-    
+
     })
-  
+
   master.list <-list()
-  
+
   #Check the list1 structure
   if(class(list3[[1]])=="list"){
     names(list2) <- list_names
@@ -91,10 +100,10 @@ rect2square <- function(list1, is.gw=FALSE){
     if(any((names(list3))=="ecosystem")) master.list[["ecosystem"]] <- list_E
     if(any((names(list3))=="references")) master.list[["references"]] <- list_R
   }
-  
+
   #if(class(list3[[1]])!="list") names(list2) <- list_names
-  
+
   if(class(list3[[1]])=="list") return(master.list)
   if(class(list3[[1]])!="list")return(list2)
-  
+
 }

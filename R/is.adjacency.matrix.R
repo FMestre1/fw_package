@@ -1,4 +1,12 @@
-#Are matrix bollean?
+#' Check which matrices are adjacency matrices (0 and 1 values for interaction)
+#'
+#' @param list1 List with the interaction matrices
+#' @return Information on whether each matrix is an adjacency matrix.
+#' @export
+#' @examples
+#' data(mg1)
+#' is.adjacency.matrix(mg1)
+
 is.adjacency.matrix <- function(list1){
 
   #Check the list1 structure
