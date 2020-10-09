@@ -6,22 +6,10 @@ DISCLAIMER: This is a very early release. The code will be subject to improvemen
 
 In the blog Geekcologist I provided an example of the use of some of these functions: https://geekcologist.wordpress.com/2020/02/06/function-to-download-biotic-interaction-datasets/
 
-# 1. Load required packages  
+# 1. Install the package  
 ```{r}
-library(FWebs)
-library(RCurl)  
-library(XML)  
-library(plyr)  
-library(stringr)  
-library(NCmisc)  
-library(sf)  
-library(igraph)  
-#install.packages("remotes")  
-#remotes::install_github("mangal-wg/rmangal")  
-library(rmangal)  
-library(randomcoloR)  
-library(ggplot2)  
-library(NetIndices)
+library(devtools) 
+install_github("FMestre1/fw_package")
 ```
 
 # 2. Create food web list (from the mangal database as an example)
