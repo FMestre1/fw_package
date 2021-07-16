@@ -446,7 +446,7 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
       download.file("http://sirs.agrocampus-ouest.fr/EcoBase/php/protect/extract_kml.php", destfile = "ecobase_polygons.kml")
       #####
       
-      rgdal::readOGR(dsn = "ecobase_polygons.kml")
+      #rgdal::readOGR(dsn = "ecobase_polygons.kml")
       #ecobase_polygons <- sf::read_sf(here::here("ecobase_polygons.kml"))
       #ecobase_polygons <- raster::shapefile("ecobase_shp.shp")
 
