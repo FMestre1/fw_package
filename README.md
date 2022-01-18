@@ -62,7 +62,7 @@ i_index <- seq(from = 0, to = 1, by =0.01)
 i_index <- head(i_index,-1)
 
 #Extract one food web as example
-fw1 <- graph_list1[[1]]
+fw1 <- graph_list1[[40]]
 
 #Compute the probability to remove each species 
 prob_exp <- exponent.removal(fw1, i_index)
