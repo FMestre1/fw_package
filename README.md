@@ -52,3 +52,21 @@ metrics
 dd.fw(mg1, log=TRUE, cumulative=TRUE)
 ```
 
+# 7. Evaluate the robustness of a food web to disturbance
+```{r}
+#Convert to list a list of ghraph objects
+graph_list1 <- convert.to.graph.list(mg1)
+
+#Create a vector with the values for the Intentionality Index (I)
+i_index <- seq(from = 0, to = 1, by =0.01)
+i_index <- head(i_index,-1)
+
+#Extract one food web as example
+fw1 <- graph_list1[[1]]
+
+#Compute the probability to remove each species 
+prob_exp <- exponent.removal(fw1, i_index)
+
+#Simulate the extraction of species to evaluate how many primary extinctions are required to have 50% of the total species extinguished
+it1 <- iterate(fw_to_attack=fw1, prob_exp, alpha1=50, iter=10, i_index, plot = TRUE)
+```
