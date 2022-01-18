@@ -10,6 +10,7 @@ In the blog Geekcologist I provided an example of the use of some of these funct
 ```{r}
 library(devtools) 
 install_github("FMestre1/fw_package")
+library(FWebs)
 ```
 
 # 2. Create food web list (from the mangal database as an example)
