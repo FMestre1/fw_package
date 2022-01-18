@@ -70,3 +70,6 @@ prob_exp <- exponent.removal(fw1, i_index)
 #Simulate the extraction of species to evaluate how many primary extinctions are required to have 50% of the total species extinguished
 it1 <- iterate(fw_to_attack=fw1, prob_exp, alpha1=50, iter=10, i_index, plot = TRUE)
 ```
+
+![Robustness (50%) across levels of intentionality of the attack to the food web. As we move along the x axis the probability of removing hubs increases.](/Rplot.png)
+
