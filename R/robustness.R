@@ -1,26 +1,29 @@
 #' Conducts species-removal robustness assessments on food webs
 #'
-#' @param fw_to_attack xxx
-#' @param probs_of_fw xxx
-#' @param alpha1 xxx
+#' @param fw_to_attack Food web matrix to be attacked, a data frame.
+#' @param probs_of_fw Vector with the probability of attack to each node.
+#' @param alpha1 Percentage of secondary extinctions after a primary extinction.
 #' @return
+#' @importFrom igraph V
+#' @importFrom igraph gsize
+#' @importFrom igraph delete_vertices
+#' @importFrom igraph gorder
 #' @export
 #' @examples
 #' data(mg1)
 #' graph_list1 <- convert.to.graph.list(mg1)
-#' 
 #' #Create a vector with the values for the Intentionality Index (I)
 #' i_index <- seq(from = 0, to = 1, by =0.01)
 #' i_index <- head(i_index,-1)
-#' fw1 <- graph_list_1[[1]]
-#' prob_exp <- exp.removal(fw1, i_index)
+#' fw1 <- graph_list1[[1]]
+#' prob_exp <- exponent.removal(fw1, i_index)
 #' r1 <- robustness(fw1, prob_exp, alpha1=50)
 
 robustness <- function(fw_to_attack, probs_of_fw, alpha1){
   #fw - List of food webs
   #probs - list of probs
   #to derive R_alpha11
-  require(igraph)
+  #require(igraph)
   
   ##FUNCTION TO ID ISOLATES (non-connected nodes)  
   isolates <- function(g){

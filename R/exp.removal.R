@@ -1,26 +1,25 @@
 #' Computes de probability of removal of each node in the food web base on a exponential function
 #'
-#' @param fw xxx
-#' @param i_index xxx
+#' @param fw Food web matrix to be attacked, a data frame.
+#' @param i_index Parameter, between 0 and 1 defining the probability of attacking hubs.
 #' @return
 #' @export
 #' @examples
 #' data(mg1)
 #' graph_list1 <- convert.to.graph.list(mg1)
-#' 
 #' #Create a vector with the values for the Intentionality Index (I)
 #' i_index <- seq(from = 0, to = 1, by =0.01)
 #' i_index <- head(i_index,-1)
-#' fw1 <- graph_list_1[[1]]
-#' prob_exp <- exp.removal(fw1, i_index)
+#' fw1 <- graph_list1[[1]]
+#' prob_exp <- exponent.removal(fw1, i_index)
 
-exp.removal <- function(fw, i_index){
+exponent.removal <- function(fw, i_index){
   
   #fw - a igraph object with the fw
   #i_index - a vector of I (intentionality) to remove hubs (from 0 to 1)
   #plot - should the function plot the results?  
   
-  require(igraph)
+  #require(igraph)
   d1 <- as.data.frame(degree(fw))
   
   #Compute the species with tha maximum and minimum k in the FW

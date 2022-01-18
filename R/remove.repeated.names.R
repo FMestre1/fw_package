@@ -1,4 +1,4 @@
-#' Remove food web matrices with repeated names, whether in columns ot rows
+#' Remove food web matrices with repeated names, whether in columns or rows
 #'
 #' @param list1 List with the interaction matrices
 #' @return A list of matrices.
@@ -11,7 +11,8 @@ remove.repeated.names <- function(list1){
   
   list3 <- list1
   
-  list_names <- names(list1[[1]])
+  list_names <- names(list1$int_matrix)
+  if(is.null(list_names)) list_names <- as.character(1:length(list3$int_matrix))
   
   #if(any((names(list1))=="int_matrix"))
   if(any((names(list1))=="spatial_info")) list_S <- list3$spatial_info
@@ -22,7 +23,7 @@ remove.repeated.names <- function(list1){
   #Check the list1 structure
   if(class(list1[[1]])=="list") {
     #nameslist <- names(list1)
-    list1 <- list1[[1]]
+    list1 <- list1$int_matrix
   }
   
   list2 <- list()
@@ -63,7 +64,7 @@ remove.repeated.names <- function(list1){
     names(list2) <- list_names[which_i]
     master.list[["int_matrix"]] <- list2
     #if(any((names(list3))=="int_matrix"))
-    if(any((names(list3))=="spatial_info")) master.list[["spatial_info"]] <- list_S[which_i]
+    if(any((names(list3))=="spatial_info")) master.list[["spatial_info"]] <- list_S[which_i,]
     if(any((names(list3))=="ecosystem")) master.list[["ecosystem"]] <- list_E[which_i,]
     if(any((names(list3))=="references")) master.list[["references"]] <- list_R[which_i,]
     if(any((names(list3))=="code")) master.list[["code"]] <- list_C[which_i]

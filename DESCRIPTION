@@ -1,4 +1,4 @@
-Package: fw
+Package: FWebs
 Type: Package
 Title: FWebs
 Version: 0.1.0
@@ -11,6 +11,6 @@ Description: This package allows downloading food web matrices
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: methods, Hmisc, stringr, NetIndices, RCurl, XML, ggplot2, igraph, plyr, randomcoloR, rmangal, sf, sp, magrittr
 Depends: R (>= 3.5.0)

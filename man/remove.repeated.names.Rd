@@ -2,7 +2,7 @@
 % Please edit documentation in R/remove.repeated.names.R
 \name{remove.repeated.names}
 \alias{remove.repeated.names}
-\title{Remove food web matrices with repeated names, whether in columns ot rows}
+\title{Remove food web matrices with repeated names, whether in columns or rows}
 \usage{
 remove.repeated.names(list1)
 }
@@ -13,7 +13,7 @@ remove.repeated.names(list1)
 A list of matrices.
 }
 \description{
-Remove food web matrices with repeated names, whether in columns ot rows
+Remove food web matrices with repeated names, whether in columns or rows
 }
 \examples{
 data(mg1)

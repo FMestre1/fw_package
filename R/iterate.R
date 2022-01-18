@@ -1,23 +1,32 @@
 #' Iterate through species-removal robustness assessments in food webs 
 #'
-#' @param fw_to_attack xxx
-#' @param probs_of_fw xxx
-#' @param alpha1 xxx
-#' @param iter xxx
-#' @param i_index xxx
-#' @param export_plot xxx
-#' @param plot_name xxx 
+#' @param fw_to_attack Food web matrix to be attacked, a matrix.
+#' @param probs_of_fw Vector with the probability of attack to each node.
+#' @param alpha1 Percentage of secondary extinctions after a primary extinction.
+#' @param iter Number of iterations to simulate.
+#' @param i_index Parameter, between 0 and 1 defining the probability of attacking hubs.
+#' @param plot Plot the results of the simulation (TRUE/FALSE).
+#' @param export_plot Should plots be exported to the working directory (TRUEFALSE)
+#' @param plot_name Plot file naming.
 #' @return A list of vectors with each metric.
+#' @importFrom stats sd
+#' @importFrom stats qnorm
+#' @importFrom utils download.file
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 ylim
+#' @importFrom ggplot2 geom_ribbon
+#' @importFrom grDevices png
+#' @importFrom grDevices dev.off
 #' @export
 #' @examples
 #' data(mg1)
 #' graph_list1 <- convert.to.graph.list(mg1)
-#' 
 #' #Create a vector with the values for the Intentionality Index (I)
 #' i_index <- seq(from = 0, to = 1, by =0.01)
 #' i_index <- head(i_index,-1)
-#' fw1 <- graph_list_1[[1]]
-#' prob_exp <- exp.removal(fw1, i_index)
+#' fw1 <- graph_list1[[1]]
+#' prob_exp <- exponent.removal(fw1, i_index)
 #' r1 <- robustness(fw1, prob_exp, alpha1=50)
 #' it1 <- iterate(fw_to_attack=fw1, prob_exp, alpha1=50, iter=10, i_index, plot = TRUE)
 
@@ -25,12 +34,13 @@ iterate <- function(fw_to_attack,
                     probs_of_fw, 
                     alpha1, 
                     iter, 
-                    i_index, plot = FALSE, 
+                    i_index, 
+                    plot = FALSE, 
                     export_plot = FALSE, 
                     plot_name = NULL)
 {
   
-  require(ggplot2)
+  #require(ggplot2)
   
   result_iterate <- data.frame(matrix(nrow = ncol(probs_of_fw)))
   
