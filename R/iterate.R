@@ -77,7 +77,7 @@ iterate <- function(fw_to_attack,
       ggplot(output, aes(x=i_index, y=meanR), xlab = "label") +
         xlab("Intentionality (I)") +
         ylab(paste0("R", alpha1)) +
-        ylim(0, alpha1+0.1) + 
+        ylim(0, (alpha1/10)+0.1) + 
         geom_line(color="steelblue4", lwd=1) +
         geom_ribbon(alpha=0.5, aes(ymin=lower.bound, ymax=upper.bound), fill="steelblue2", color="steelblue2")
     )
@@ -89,7 +89,7 @@ iterate <- function(fw_to_attack,
       ggplot(output, aes(x=i_index, y=meanR), xlab = "label") +
         xlab("Intentionality (I)") +
         ylab(paste0("R", alpha1)) +
-        ylim(0, alpha1+0.1) + 
+        ylim(0, (alpha1/10)+0.1) + 
         geom_line(color="steelblue4", lwd=1) +
         geom_ribbon(alpha=0.5, aes(ymin=lower.bound, ymax=upper.bound), fill="steelblue2", color="steelblue2")
     )
