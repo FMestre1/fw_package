@@ -46,6 +46,5 @@ i_index <- seq(from = 0, to = 1, by =0.01)
 i_index <- head(i_index,-1)
 fw1 <- graph_list1[[1]]
 prob_exp <- exponent.removal(fw1, i_index)
-r1 <- robustness(fw1, prob_exp, alpha1=50)
 it1 <- iterate(fw_to_attack=fw1, prob_exp, alpha1=50, iter=10, i_index, plot = TRUE)
 }
