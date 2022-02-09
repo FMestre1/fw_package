@@ -1,8 +1,8 @@
-# FWebs (v. 0.1.0)
+# FWebs (v. 0.1.0) - Downloading and processing food web datasets
 
-Beta version of package to download, process and derive metrics from food web datasets. 
+Download food web datasets from online databases, process, compute structural metrics and evaluate robustness. 
 
-DISCLAIMER: This is a very early release. The code will be subject to improvements. A few errors might occur when running these functions. Any suggestions are welcomed!
+DISCLAIMER: This is development version. The code is continuously being subjected to improvements. Any suggestions are welcomed!
 
 In the blog Geekcologist I provided an example of the use of some of these functions: https://geekcologist.wordpress.com/2020/02/06/function-to-download-biotic-interaction-datasets/
 
