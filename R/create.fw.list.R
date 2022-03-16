@@ -244,7 +244,7 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
     #Load files
     for(i in 1:nwl){
       message(paste0("Fetching food web ", i, " in ", nwl, "!"))
-      dfwl <- read.csv(paste0(folder, "/",files_wl[i]), header = TRUE)  # read csv file
+      dfwl <- read.csv(paste0(folder, "/",files_wl[i]), header = TRUE, row.names=1)  # read csv file
       #row.names(dfwl) <- as.character(dfwl[,1])
       #dfwl <- dfwl[,-1]
       dfwl[is.na(dfwl)] <- 0
@@ -696,6 +696,5 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   if(length(master_list)!=1) return(master_list)
   
   message("####################### DONE! #######################")
-  
   
 }#END OF FUNCTION create.fw.list
