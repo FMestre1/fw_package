@@ -7,6 +7,7 @@
 #' @param ref references information
 #' @param spatial get spatial info (only for db=wl, db=eb and db=mg)
 #' @param code To get the food web code
+#' @param all_mangal_types Are all mangal database types to be downloaded? (TRUE/FALSE) 
 #' @return A list of matrices
 #' @importFrom Hmisc all.is.numeric
 #' @importFrom ggplot2 aes ggplot theme annotation_logticks geom_line scale_y_log10 scale_x_log10 element_text labs
@@ -28,7 +29,7 @@
 #' @examples #mg2 <- create.fw.list(db="mg", ref=TRUE, spatial=TRUE)
 
 
-create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE)
+create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE, all_mangal_types = FALSE)
   {
   #utils::globalVariables(c("model.dissemination_allow", "model.whole_food_web"))
   model.dissemination_allow <- model.whole_food_web <- NULL
@@ -542,6 +543,18 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
     
     type <- c("predation", "herbivory")
     
+    if(all_mangal_types == TRUE) {
+      
+      type <- c("competition", "predation", "herbivory",
+                "amensalism", "neutralism", "commensalism",
+                "mutualism", "parasitism", "symbiosis",
+                "scavenger", "detritivore")
+      
+      message("You are downloading the all types of interactions in the mangal database:
+              competition, predation, herbivory, amensalism, neutralism, commensalism,
+              mutualism, parasitism, symbiosis, scavenger, detritivore")
+    }
+    
     ntypes <- length(type)
     
     net_info <- list()
@@ -696,5 +709,6 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   if(length(master_list)!=1) return(master_list)
   
   message("####################### DONE! #######################")
+  
   
 }#END OF FUNCTION create.fw.list
