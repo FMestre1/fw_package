@@ -1,7 +1,7 @@
 Package: FWebs
 Type: Package
 Title: FWebs
-Version: 0.1.0
+Version: 0.1.1
 Author: Frederico Mestre
 Maintainer: Frederico Mestre <mestre.frederico@gmail.com>
 Description: This package allows downloading food web matrices
