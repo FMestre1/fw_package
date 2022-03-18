@@ -5,9 +5,9 @@
 #' @param mangal_types If db=mg the user should provide the type of interactions to be downloaded; if 'db=all' all mangal interaction types are used
 #' @param ecosyst Getting ecosystem information (only for db=gw, db=eb)
 #' @param ref references information
-#' @param spatial get spatial info (only for db=wl, db=eb and db=mg)
+#' @param spatial get spatial info (only for )
 #' @param code To get the food web code
-#' @return A list of matrices
+#' @return Returns a list that might have the following elements (depending on use options): 1. list of interaction matrices, 2. Reference data frame with FW code, first author of original publication, year of publication, full reference (if db='mg': FW code, type of interaction matrix, original ID in mangal, first author of original publication, year of publication); 3. Study site location (for db=wl, db=eb and db=mg); 4. FW code. 
 #' @importFrom Hmisc all.is.numeric
 #' @importFrom ggplot2 aes ggplot theme annotation_logticks geom_line scale_y_log10 scale_x_log10 element_text labs
 #' @importFrom NetIndices GenInd TrophInd
@@ -30,6 +30,7 @@
 
 create.fw.list <- function(db, folder = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE, mangal_types = NULL)
   {
+  
   #utils::globalVariables(c("model.dissemination_allow", "model.whole_food_web"))
   model.dissemination_allow <- model.whole_food_web <- NULL
   
@@ -452,13 +453,20 @@ create.fw.list <- function(db, folder = NULL, ecosyst=FALSE, ref=FALSE, spatial=
       message("Fetching spatial information from the EcoBase website...")
       
       #Get actual polygons
-      EcoBase_shape <- sf::st_read("http://sirs.agrocampus-ouest.fr/EcoBase/php/protect/extract_kml.php")
-      download.file("http://sirs.agrocampus-ouest.fr/EcoBase/php/protect/extract_kml.php", destfile = "ecobase_polygons.kml")
-      #####
-      
-      #rgdal::readOGR(dsn = "ecobase_polygons.kml")
-      #ecobase_polygons <- sf::read_sf(here::here("ecobase_polygons.kml"))
-      #ecobase_polygons <- raster::shapefile("ecobase_shp.shp")
+      #message("Downloading 'ecobase_spatial_info.kml' file to working directory!")
+      #download.file("http://sirs.agrocampus-ouest.fr/EcoBase/php/protect/extract_kml.php", destfile = "ecobase_spatial_info.kml")
+      if(!file.exists("ecobase_areas.shp")){
+        
+        stop("If you need the spatial information on each dataset you have to:\n
+             1. Download the kml file from http://sirs.agrocampus-ouest.fr/EcoBase/php/protect/extract_kml.php;\n
+             (file name is 'location.kml')\n
+             2. Convert it to a shapefile in any GIS;\n
+             3. Name it 'ecobase_areas.shp';\n
+             4. Place it in the working directory;\n
+             ... I know, it is not ideal!...
+             ")
+        
+      }else EcoBase_shape <- sf::st_read("ecobase_areas.shp")
       
       ebd <- EcoBase_shape$Name
       
@@ -732,4 +740,6 @@ create.fw.list <- function(db, folder = NULL, ecosyst=FALSE, ref=FALSE, spatial=
   if(length(master_list)!=1) return(master_list)
   
   message("####################### DONE! #######################")
-}#END OF FUNCTION create.fw.list
+  
+  
+  }#END OF FUNCTION create.fw.list
