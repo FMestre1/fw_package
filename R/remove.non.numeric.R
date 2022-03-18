@@ -9,6 +9,7 @@
 
 remove.non.numeric <- function(list1){
   
+
   list3 <- list1#save list1 structure
   
   list_names <- names(list1[[1]])
@@ -62,12 +63,12 @@ remove.non.numeric <- function(list1){
   if(class(list3[[1]])=="list"){
     names(list2) <- list_names[which_i]
     master.list[["int_matrix"]] <- list2
-    #if(any((names(list3))=="int_matrix"))
-    if(exists("list_S")){if(any((names(list3))=="spatial_info" & class(list_S)!="data.frame")) master.list[["spatial_info"]] <- list_S[which_i]
-    if(any((names(list3))=="spatial_info" & class(list_S)=="data.frame")) master.list[["spatial_info"]] <- list_S[which_i,]
-    }
     if(any((names(list3))=="ecosystem")) master.list[["ecosystem"]] <- list_E[which_i,]
-    if(any((names(list3))=="references")) master.list[["references"]] <- list_R[which_i,]
+    if(any((names(list3))=="references")) master.list[["references"]] <- list_R[which_i,]    
+    if(exists("list_S")){
+      if(any((names(list3))=="spatial_info" & class(list_S)!="data.frame")) master.list[["spatial_info"]] <- list_S[which_i]
+      if(any((names(list3))=="spatial_info" & class(list_S)=="data.frame")) master.list[["spatial_info"]] <- list_S[which_i,]
+    }
     if(any((names(list3))=="code")) master.list[["code"]] <- list_C[which_i]
     
   }
@@ -76,5 +77,6 @@ remove.non.numeric <- function(list1){
   
   if(class(list3[[1]])=="list") return(master.list)
   if(class(list3[[1]])!="list")return(list2)
+  
   
 }#end remove.n.numeric

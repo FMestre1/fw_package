@@ -18,6 +18,8 @@ convert2adjacency <- function(list1){
   if(any((names(list3))=="spatial_info")) list_S <- list3$spatial_info
   if(any((names(list3))=="ecosystem")) list_E <- list3$ecosystem
   if(any((names(list3))=="references")) list_R <- list3$references
+  if(any((names(list3))=="code")) list_C <- list3$code
+  
 
   #Check the list1 structure
   if(class(list1[[1]])=="list") {
@@ -46,11 +48,11 @@ convert2adjacency <- function(list1){
   if(class(list3[[1]])=="list"){
     names(list2) <- list_names
     master.list[["int_matrix"]] <- list2
-    #if(any((names(list3))=="int_matrix"))
-    if(any((names(list3))=="spatial_info")) master.list[["spatial_info"]] <- list_S
     if(any((names(list3))=="ecosystem")) master.list[["ecosystem"]] <- list_E
     if(any((names(list3))=="references")) master.list[["references"]] <- list_R
-  }
+    if(any((names(list3))=="spatial_info")) master.list[["spatial_info"]] <- list_S
+    if(any((names(list3))=="code")) master.list[["code"]] <- list_C
+    }
 
   if(class(list3[[1]])!="list") names(list2) <- list_names
 
