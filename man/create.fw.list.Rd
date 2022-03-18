@@ -2,16 +2,16 @@
 % Please edit documentation in R/create.fw.list.R
 \name{create.fw.list}
 \alias{create.fw.list}
-\title{Download dataset from database}
+\title{Download datasets from online database}
 \usage{
 create.fw.list(
   db,
   folder = NULL,
-  type = NULL,
   ecosyst = FALSE,
   ref = FALSE,
   spatial = FALSE,
-  code = FALSE
+  code = FALSE,
+  mangal_types = NULL
 )
 }
 \arguments{
@@ -19,21 +19,21 @@ create.fw.list(
 
 \item{folder}{Folder in the working directory to get the dataset files (db=gw and wl)}
 
-\item{type}{If db=mg the user should provide the type of interactions to be downloaded}
-
 \item{ecosyst}{Getting ecosystem information (only for db=gw, db=eb)}
 
 \item{ref}{references information}
 
-\item{spatial}{get spatial info (only for db=wl, db=eb and db=mg)}
+\item{spatial}{get spatial info (only for )}
 
 \item{code}{To get the food web code}
+
+\item{mangal_types}{If db=mg the user should provide the type of interactions to be downloaded; if 'db=all' all mangal interaction types are used}
 }
 \value{
-A list of matrices
+Returns a list that might have the following elements (depending on use options): 1. list of interaction matrices, 2. Reference data frame with FW code, first author of original publication, year of publication, full reference (if db='mg': FW code, type of interaction matrix, original ID in mangal, first author of original publication, year of publication); 3. Study site location (for db=wl, db=eb and db=mg); 4. FW code.
 }
 \description{
-Download dataset from database
+Download datasets from online database
 }
 \examples{
 #mg2 <- create.fw.list(db="mg", ref=TRUE, spatial=TRUE)

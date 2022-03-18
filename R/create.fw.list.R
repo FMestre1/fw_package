@@ -1,4 +1,4 @@
-#' Download dataset from database
+#' Download datasets from online database
 #'
 #' @param db Database: eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
 #' @param folder Folder in the working directory to get the dataset files (db=gw and wl)
