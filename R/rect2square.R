@@ -2,7 +2,7 @@
 #'
 #' @param list1 List with the interaction matrices
 #' @param is.gw Was the dataset downloaded from Globalweb? (TRUE/FALSE)
-#' @return A list of square matrices.
+#' @return A list of square matrices (not simetrical).
 #' @export
 #' @examples
 #' data(mg1)
@@ -126,4 +126,4 @@ rect2square <- function(list1, is.gw=FALSE){
   
   
 
-}
+}#END rect2square

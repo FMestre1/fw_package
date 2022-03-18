@@ -1,7 +1,7 @@
 #' Converts all matrices to adjacency matrices (0 and 1 values for interaction)
 #'
 #' @param list1 List with the interaction matrices
-#' @return A list of adjacency matrices.
+#' @return A list of adjacency matrices (0: no interaction; 1: interaction).
 #' @export
 #' @examples
 #' data(mg1)

@@ -1,7 +1,7 @@
 #' Derives structural metrics to each food web matrix
 #'
 #' @param list1 List with the interaction matrices
-#' @return A list of vectors with each metric.
+#' @return A list of vectors with each metric (number of nodes, number of links, link density, connectance, compartmentalization, maximum trophic level).
 #' @export
 #' @examples
 #' data(mg1)

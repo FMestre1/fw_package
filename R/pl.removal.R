@@ -59,4 +59,4 @@ pl.removal <- function(fw, i_index){
   
   return(Ppl_results[,-1])
   
-}
+}#END pl.removal

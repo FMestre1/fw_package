@@ -10,7 +10,7 @@ fw.metrics(list1)
 \item{list1}{List with the interaction matrices}
 }
 \value{
-A list of vectors with each metric.
+A list of vectors with each metric (number of nodes, number of links, link density, connectance, compartmentalization, maximum trophic level).
 }
 \description{
 Derives structural metrics to each food web matrix

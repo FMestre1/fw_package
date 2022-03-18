@@ -10,7 +10,7 @@ convert2adjacency(list1)
 \item{list1}{List with the interaction matrices}
 }
 \value{
-A list of adjacency matrices.
+A list of adjacency matrices (0: no interaction; 1: interaction).
 }
 \description{
 Converts all matrices to adjacency matrices (0 and 1 values for interaction)

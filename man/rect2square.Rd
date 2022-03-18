@@ -12,7 +12,7 @@ rect2square(list1, is.gw = FALSE)
 \item{is.gw}{Was the dataset downloaded from Globalweb? (TRUE/FALSE)}
 }
 \value{
-A list of square matrices.
+A list of square matrices (not simetrical).
 }
 \description{
 Convert rectanguar matrices to square matrices (same number of columns and rows)

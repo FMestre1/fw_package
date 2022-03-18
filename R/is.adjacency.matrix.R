@@ -26,4 +26,4 @@ is.adjacency.matrix <- function(list1){
 
   }
 
-}#end is.bollean.int
+}#end is.adjacency.matrix

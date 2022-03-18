@@ -33,4 +33,4 @@ is.sq.matrix <- function(list1){
 
   }
 
-}
+}#END is.sq.matrix
