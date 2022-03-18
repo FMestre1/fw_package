@@ -2,12 +2,11 @@
 #'
 #' @param db Database: eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
 #' @param folder Folder in the working directory to get the dataset files (db=gw and wl)
-#' @param type If db=mg the user should provide the type of interactions to be downloaded
+#' @param mangal_types If db=mg the user should provide the type of interactions to be downloaded; if 'db=all' all mangal interaction types are used
 #' @param ecosyst Getting ecosystem information (only for db=gw, db=eb)
 #' @param ref references information
 #' @param spatial get spatial info (only for db=wl, db=eb and db=mg)
 #' @param code To get the food web code
-#' @param all_mangal_types Are all mangal database types to be downloaded? (TRUE/FALSE) 
 #' @return A list of matrices
 #' @importFrom Hmisc all.is.numeric
 #' @importFrom ggplot2 aes ggplot theme annotation_logticks geom_line scale_y_log10 scale_x_log10 element_text labs
@@ -29,7 +28,7 @@
 #' @examples #mg2 <- create.fw.list(db="mg", ref=TRUE, spatial=TRUE)
 
 
-create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE, all_mangal_types = FALSE)
+create.fw.list <- function(db, folder = NULL, ecosyst=FALSE, ref=FALSE, spatial=FALSE, code=FALSE, mangal_types = NULL)
   {
   #utils::globalVariables(c("model.dissemination_allow", "model.whole_food_web"))
   model.dissemination_allow <- model.whole_food_web <- NULL
@@ -37,10 +36,10 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   #### Arguments  ####
   #db - database - eb (EcoBase), gw (GlobalWeb), wl (Web of Life) and mg (Mangal)
   #folder - folder in the WD to get the dataset files (db=gw and wl).
-  #type - if db=mg the user should provide the type of interactions to be downloaded
   #ecosyst - Getting ecosystem information, only for gw, eb
   #ref references information
   #spatial - get spatial info, only for wl, eb and mg
+  #mangal_types - if db=mg the user should provide the type of interactions to be downloaded
   
   #### Data Sources ####
   #Global Web: https://www.globalwebdb.com/
@@ -68,7 +67,7 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   #type
   
   #folder
-  if(!db %in% c("mg") & !is.null(type)) stop("Argument 'type'can only be used if 'db'= 'mg'!")
+  if(!db %in% c("mg") & !is.null(mangal_types)) stop("Argument 'type'can only be used if 'db'= 'mg'!")
   
   #ecosyst
   
@@ -83,6 +82,10 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   #code
   if(!db %in% c("wl", "mg", "gw") & code==TRUE) stop("Argument 'code'can only be used if 'db'= 'wl', 'mg'', 'gw'!")
   
+  #mangal_types
+  if("mg" %in% db & is.null(mangal_types)) message("No value defined for the 'mangal_types' argument! \n Will assume types 'predation' and 'herbivory'.")
+  if(!"mg" %in% db & !is.null(mangal_types)) stop("Argument 'mangal_types'can only be used if 'db'= 'mg'!")
+  
   ############################################################################################
   #Updating each dataset database
   
@@ -94,6 +97,9 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
     files_gw <- list.files(path = folder, pattern = "WEB")
     ngw <- length(files_gw)
     message (paste0("There are ", ngw, " food web files in the folder!"))
+    message ("You should have downloaded the file 'Current Food Web List' from the GlobalWeb website
+             \n and converted it to csv.")
+    
     
     #Load files into list
     #And create vector of references
@@ -191,7 +197,8 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
     if(ecosyst==TRUE){
       message("Searching for 'gw_list.csv' file...")
       
-      if (!file.exists(paste0(folder, "/gw_list.csv"))) stop("\nThe pdf 'gw_list.pdf' has to be previously converted to a csv file...")
+      if (!file.exists(paste0(folder, "/gw_list.csv"))) stop("\nDownload the file 'Current Food Web List' from the website
+                                                             \nand convert to a csv named 'gw_list.csv' please!")
       
       #I had to conver the gw_list.pdf file to excel (csv), since I could not install tabulizes to extract pdf tables
       gw_eco <- read.csv(paste0(folder,"/","gw_list.csv"), header = TRUE, sep = ";")  # read csv file
@@ -539,41 +546,50 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
     
     message("####################### MANGAL DATABASE #######################\n\n")
     
-    message("Fetching datasets from the Mangal website! \n\n Types 'predation' and 'herbivory' by default... \n but run mangal function 'avail_type' to check available types...\n\nThis operation might take a long time!")
+    message("Fetching datasets from the Mangal website! \nThis operation might take a long time!")
     
-    type <- c("predation", "herbivory")
+    #type <- mangal_types
     
-    if(all_mangal_types == TRUE) {
+    #Default value
+    if(is.null(mangal_types)) mangal_types <- c("predation", "herbivory")
+    
+    if("all" %in% mangal_types) {
       
-      type <- c("competition", "predation", "herbivory",
-                "amensalism", "neutralism", "commensalism",
-                "mutualism", "parasitism", "symbiosis",
-                "scavenger", "detritivore")
+      mangal_types <- c("competition", "predation", "herbivory",
+                        "amensalism", "neutralism", "commensalism",
+                        "mutualism", "parasitism", "symbiosis",
+                        "scavenger", "detritivore")
       
       message("You are downloading the all types of interactions in the mangal database:
               competition, predation, herbivory, amensalism, neutralism, commensalism,
               mutualism, parasitism, symbiosis, scavenger, detritivore")
-    }
+    }else mangal_types <- mangal_types
     
-    ntypes <- length(type)
+    ntypes <- length(mangal_types)
     
     net_info <- list()
+    type_info <- c()
     
-    for(i in 1:ntypes){
+    for(i in 1:ntypes){#Going through the interaction types
       
-      message(paste0("\n\nFetching information from interactions of the type ","'",type[i], "'!"))
+      message(paste0("\n\nFetching information from interactions of the type ","'",mangal_types[i], "'!"))
       
-      fwlist1 <- rmangal::search_interactions(type = type[i]) %>% rmangal::get_collection()
+      #fwlist1 <- rmangal::search_interactions(type = type[i]) %>% rmangal::get_collection()
+      #Get all networks containing competition
+      df_inter <- search_interactions(type = mangal_types[i], verbose = TRUE)
       
-      net_info <- rbind(net_info, fwlist1)
+      if(nrow(df_inter)>0) fwlist1 <- get_collection(df_inter, verbose = TRUE)
       
-      fwlist2 <- rmangal::as.igraph(fwlist1)
+      #if(nrow(df_inter)>0) net_info <- rbind(net_info, fwlist1)
+      if(nrow(df_inter)>0) net_info <- c(net_info, fwlist1)
       
-      fwlist <- c(fwlist, fwlist2)
+      if(nrow(df_inter)>0) fwlist2 <- rmangal::as.igraph(fwlist1)
       
-      #class(fwlist)
+      if(nrow(df_inter)>0) type_info <- c(type_info, rep(mangal_types[i], length(fwlist2)))
       
-    }
+      if(nrow(df_inter)>0) fwlist <- c(fwlist, fwlist2)
+      
+    }#END of going through types
     
     #Converting igraph objects to data frame
     for(i in 1:length(fwlist)){
@@ -584,7 +600,8 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
       
       for(j in 1:nrow(id_name)){#clean the names
         
-        node_name <- id_name$original_name[j]
+        node_name <- (paste0(id_name$original_name[j],"_" , id_name$name[j]))
+        #node_name <- id_name$original_name[j]
         
         if (grepl(":", node_name, fixed=TRUE)) {
           node_name <- tail(strsplit(node_name, ": "))[[1]]
@@ -613,27 +630,33 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
       
     }#end of loop to convert to a data frame
     
-    if(ref==TRUE){
-      references <- as.data.frame(matrix(ncol = 4))
-      names(references) <- c("Dataset ID", "first_author", "year", "DOI" )
+    #if(ref==TRUE){
+    references <- as.data.frame(matrix(ncol = 6))
+    names(references) <- c("Dataset ID", "Type of interaction", "Original ID","first_author", "year", "DOI")
+    
+    message("Fetching references!")
+    
+    for(j in 1:length(net_info)){
+      dataset_id <- net_info[[j]]$dataset$dataset_id
+      first_author <- net_info[[j]]$reference$first_author
+      year_mng <- as.numeric(net_info[[j]]$reference$year)
+      doi_mng <- net_info[[j]]$reference$doi
+      #references[j,1] <- dataset_id
+      references[j,3] <- dataset_id
+      references[j,4] <- first_author
+      references[j,5] <- year_mng
+      references[j,6] <- doi_mng
       
-      message("Fetching references!")
-      
-      for(j in 1:length(net_info)){
-        dataset_id <- net_info[[j]]$dataset$dataset_id
-        first_author <- net_info[[j]]$reference$first_author
-        year_mng <- as.numeric(net_info[[j]]$reference$year)
-        doi_mng <- net_info[[j]]$reference$doi
-        references[j,1] <- dataset_id
-        references[j,2] <- first_author
-        references[j,3] <- year_mng
-        references[j,4] <- doi_mng
-        
-        references <- references[order(references$`Dataset ID`),]
-        rownames(references) <- 1:nrow(references)
-      }
-      
-    }#End of mg refs
+      references <- references[order(references$`Dataset ID`),]
+      rownames(references) <- 1:nrow(references)
+    }
+    
+    references[,1] <- paste0("mg_",1:nrow(references))
+    references[,2] <- type_info
+    
+    #}#End of mg refs
+    
+    names(fwlist) <-  paste0("mg_", references[,1])
     
     if(spatial==TRUE){
       spatial1 <- as.data.frame(matrix(ncol = 4))
@@ -672,7 +695,7 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
       
     }#End of mg spatial
     
-    if (exists("references") & exists("spatial1")) (if(nrow(references)!=nrow(spatial1)) message("WARNING: There are more than on FW in some datasets! References and Spatial data frames have different number of rows."))
+    #if (exists("references") & exists("spatial1")) (if(nrow(references)!=nrow(spatial1)) message("WARNING: There are more than on FW in some datasets! References and Spatial data frames have different number of rows."))
     
   }#end of mangal
   
@@ -699,7 +722,7 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   if(code==TRUE) {
     if(db == "gw") master_list[["code"]] <- files_gw
     if(db == "wl") master_list[["code"]] <- files_wl
-    if(db == "mg") master_list[["code"]] <- references[1,]
+    if(db == "mg") master_list[["code"]] <- references[,1]
     
     message ("Added food web code information.")
   }
@@ -709,6 +732,4 @@ create.fw.list <- function(db, folder = NULL, type = NULL, ecosyst=FALSE, ref=FA
   if(length(master_list)!=1) return(master_list)
   
   message("####################### DONE! #######################")
-  
-  
 }#END OF FUNCTION create.fw.list

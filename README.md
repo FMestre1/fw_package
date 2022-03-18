@@ -1,4 +1,4 @@
-# FWebs (v. 0.1.0) - Downloading and processing food web datasets
+# FWebs (v. 0.1.1) - Downloading and processing food web datasets
 
 Download food web datasets from online databases, process, compute structural metrics and evaluate robustness. 
 
